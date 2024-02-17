@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile default="true" name="Default" enabled="true" />
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="rail-app" />
+        <module name="service-app" />
+        <module name="car-rent" />
+        <module name="support-document" />
+        <module name="savings" />
+        <module name="gateway" />
+        <module name="service-discovery" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="car-rent" target="17" />
+      <module name="gateway" target="17" />
+      <module name="rail-app" target="17" />
+      <module name="savings" target="17" />
+      <module name="service-app" target="17" />
+      <module name="service-discovery" target="17" />
+      <module name="serviceDiscovery" target="17" />
+      <module name="support-document" target="17" />
+    </bytecodeTargetLevel>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="car-rent" options="-parameters" />
+      <module name="gateway" options="-parameters" />
+      <module name="rail-app" options="-parameters" />
+      <module name="savings" options="-parameters" />
+      <module name="service-app" options="-parameters" />
+      <module name="service-discovery" options="-parameters" />
+      <module name="serviceDiscovery" options="-parameters" />
+      <module name="support-document" options="-parameters" />
+    </option>
+  </component>
+</project>

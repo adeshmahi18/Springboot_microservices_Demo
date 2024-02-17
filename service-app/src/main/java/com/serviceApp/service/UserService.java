@@ -14,7 +14,7 @@ public interface UserService {
 
     Optional<User> login(LoginDto loginDto);
 
-
+    UserDetailsService userDetailsService();
 
     interface CustomerService {
         public void createCustomer(Customer customer);

@@ -7,9 +7,9 @@ import com.serviceApp.repo.UserRepository;
 import com.serviceApp.response.AuthenticateResponse;
 import com.serviceApp.service.UserService;
 import com.serviceApp.utils.JwtUtil;
-import jakarta.servlet.http.HttpServletResponse;
-import org.json.JSONObject;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -17,8 +17,7 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
+ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -46,7 +45,7 @@ public class UserController {
     public static final String TOKEN_PREFIX="Bearer ";
     public static final String HEADER="Authorization";
 
-    @PostMapping("/signUp")
+    @PostMapping("/api/signUp")
     public ResponseEntity<?> saveUser(@RequestBody SignupDto user){
         System.out.println("user role ==="+user.getEmail());
         SignupDto savedUser=userService.saveUser(user);
@@ -55,7 +54,7 @@ public class UserController {
 
 
 
-    @PostMapping("/login")
+    @PostMapping("/api/login")
     public ResponseEntity<?> createAuthenticationToken (@RequestBody LoginDto loginDto) throws IOException {
         //System.out.println("getEmail===="+ loginDto.getEmail());
         //HttpServletResponse response;
@@ -66,16 +65,19 @@ public class UserController {
         }
         //System.out.println("getEmail===="+ loginDto.getEmail());
         final UserDetails userDetails=userDetailsService.loadUserByUsername(loginDto.getEmail());
-        final String token =jwtUtil.generateToken(userDetails.getUsername());
+         String token =jwtUtil.generateToken(userDetails.getUsername());
         //System.out.println("token===="+ token);
         Optional<User> userExists= userRepository.findByEmail(userDetails.getUsername());
         //System.out.println("userExists===="+ userExists);
         AuthenticateResponse response =new AuthenticateResponse();
+        HttpHeaders headers = new HttpHeaders();
         if(userExists.isPresent()){
             /*response.getWriter().write(new JSONObject()
                     .put("userID",userExists.get().getId())
                     .toString());*/
             response.setId(userExists.get().getId());
+            token="Bearer " + token;
+            headers.add("Authorization", "Bearer " + token);
              response.setJwt(token);
          }
 
@@ -86,6 +88,7 @@ public class UserController {
         //System.out.println(TOKEN_PREFIX +token);
 
         //response.setHeader(HEADER, TOKEN_PREFIX +token);
+        System.out.println(headers);
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 }

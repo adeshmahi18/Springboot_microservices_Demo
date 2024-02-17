@@ -30,11 +30,11 @@ public class WebSecurityConfiguration {
 
         httpSecurity.csrf(csrf -> csrf.disable()).authorizeHttpRequests((authorize) -> {
             authorize.requestMatchers(HttpMethod.POST, "/createCustomer").permitAll();
-            authorize.requestMatchers(HttpMethod.POST, "/signUp").permitAll();
-            authorize.requestMatchers(HttpMethod.POST, "/login").permitAll();
+            authorize.requestMatchers(HttpMethod.POST, "/api/signUp").permitAll();
+            authorize.requestMatchers(HttpMethod.POST, "/api/login").permitAll();
             authorize.requestMatchers(HttpMethod.POST, "/authenticate").permitAll();
             authorize.requestMatchers(HttpMethod.POST, "/postQuestion").permitAll();
-            authorize.requestMatchers(HttpMethod.POST, "/GetAllQuestions").permitAll();
+            authorize.requestMatchers(HttpMethod.POST, "/uploadData").permitAll();
             authorize.requestMatchers(HttpMethod.PUT, "/api/**");
             authorize.anyRequest().authenticated();
 
